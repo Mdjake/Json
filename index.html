@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminder Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .input-field {
+            margin: 10px 0;
+            width: 100%;
+        }
+        .input-field input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .input-field textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            height: 100px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .download-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Set Your Reminder</h2>
+    <form id="reminder-form">
+        <div class="input-field">
+            <label for="time">Time (HH:MM format)</label>
+            <input type="text" id="time" placeholder="Enter Time" required>
+        </div>
+        <div class="input-field">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Enter your message" required></textarea>
+        </div>
+        <button type="submit">Generate Reminder</button>
+    </form>
+
+    <div class="download-link" id="download-link-container" style="display:none;">
+        <a id="download-link" href="" download="data.json">
+            <button>Download data.json</button>
+        </a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('reminder-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Collect user input values
+        var time = document.getElementById('time').value;
+        var message = document.getElementById('message').value;
+
+        // Create the data object
+        var data = {
+            "time": time,
+            "message": message
+        };
+
+        // Convert the data object to a JSON string
+        var jsonData = JSON.stringify(data);
+
+        // Create a Blob with the JSON data
+        var blob = new Blob([jsonData], { type: 'application/json' });
+
+        // Create a download link for the JSON file
+        var url = URL.createObjectURL(blob);
+        var downloadLink = document.getElementById('download-link');
+        downloadLink.href = url;
+
+        // Show the download link container
+        document.getElementById('download-link-container').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
