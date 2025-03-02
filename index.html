@@ -3,54 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reminder Setup</title>
+    <title>Reminder Setup | By Developer Saif</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background: #f0f4f8;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f9;
             margin: 0;
+            color: #333;
         }
         .container {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            padding: 40px;
             width: 400px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
         }
         h2 {
-            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .time-select {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fafafa;
+            width: 30%;
+            margin: 0 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        select:hover {
+            border-color: #4CAF50;
         }
         .input-field {
-            margin: 10px 0;
             width: 100%;
+            margin-bottom: 20px;
         }
-        select, textarea {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
+        textarea {
             width: 100%;
             padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fafafa;
+            height: 100px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        textarea:hover {
+            border-color: #4CAF50;
+        }
+        button {
             background-color: #4CAF50;
-            color: white;
+            color: #ffffff;
+            padding: 12px;
+            width: 100%;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
         button:hover {
             background-color: #45a049;
         }
         .download-link {
-            margin-top: 15px;
-            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+        .footer {
+            font-size: 14px;
+            color: #888;
+            margin-top: 20px;
+        }
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -59,75 +113,92 @@
 <div class="container">
     <h2>Set Your Reminder</h2>
     <form id="reminder-form">
-        <!-- Time Selection -->
         <div class="input-field">
-            <label for="hour">Select Time</label>
-            <div style="display: flex; gap: 5px;">
-                <select id="hour">
-                    <script>
-                        for (let i = 1; i <= 12; i++) {
-                            document.write(`<option value="${i}">${i}</option>`);
-                        }
-                    </script>
-                </select>
-                :
-                <select id="minute">
-                    <script>
-                        for (let i = 0; i < 60; i++) {
-                            let minute = i < 10 ? "0" + i : i;
-                            document.write(`<option value="${minute}">${minute}</option>`);
-                        }
-                    </script>
-                </select>
+            <label>Select Time</label>
+            <div class="time-select">
+                <select id="hours"></select>
+                <select id="minutes"></select>
                 <select id="ampm">
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
                 </select>
             </div>
         </div>
-
-        <!-- Message Input -->
         <div class="input-field">
             <label for="message">Message</label>
             <textarea id="message" placeholder="Enter your message" required></textarea>
         </div>
-
         <button type="submit">Generate Reminder</button>
     </form>
 
-    <div class="download-link" id="download-link-container" style="display:none;">
+    <div class="download-link" id="download-link-container">
         <a id="download-link" href="" download="data.json">
             <button>Download data.json</button>
         </a>
     </div>
+
+    <div class="footer">
+        <p>Created with ❤️ by <a href="https://github.com/mdjake" target="_blank">Developer Saif</a></p>
+    </div>
 </div>
 
 <script>
+    function getCurrentTime() {
+        let now = new Date();
+        let hours = now.getHours() % 12 || 12; // Convert 24-hour to 12-hour format
+        let minutes = now.getMinutes();
+        let ampm = now.getHours() >= 12 ? "PM" : "AM";
+
+        return { hours, minutes, ampm };
+    }
+
+    function populateTimeDropdowns() {
+        let hoursSelect = document.getElementById("hours");
+        let minutesSelect = document.getElementById("minutes");
+        let ampmSelect = document.getElementById("ampm");
+
+        let currentTime = getCurrentTime();
+
+        // Populate hours (1-12)
+        for (let h = 1; h <= 12; h++) {
+            let option = new Option(h, h);
+            if (h === currentTime.hours) option.selected = true;
+            hoursSelect.appendChild(option);
+        }
+
+        // Populate minutes (0-59)
+        for (let m = 0; m < 60; m++) {
+            let formattedMinute = String(m).padStart(2, '0');
+            let option = new Option(formattedMinute, formattedMinute);
+            if (m === currentTime.minutes) option.selected = true;
+            minutesSelect.appendChild(option);
+        }
+
+        // Set default AM/PM
+        ampmSelect.value = currentTime.ampm;
+    }
+
+    document.addEventListener("DOMContentLoaded", populateTimeDropdowns);
+
     document.getElementById('reminder-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
-        // Get selected time values
-        var hour = document.getElementById('hour').value;
-        var minute = document.getElementById('minute').value;
-        var ampm = document.getElementById('ampm').value;
-        var message = document.getElementById('message').value;
+        let hours = document.getElementById('hours').value;
+        let minutes = document.getElementById('minutes').value;
+        let ampm = document.getElementById('ampm').value;
+        let message = document.getElementById('message').value;
 
-        // Format time as "HH:MM AM/PM"
-        var time = `${hour}:${minute} ${ampm}`;
+        let time = `${hours}:${minutes} ${ampm}`;
 
-        // Create JSON data
-        var data = {
+        let data = {
             "time": time,
             "message": message
         };
 
-        // Convert to JSON and create Blob
-        var jsonData = JSON.stringify(data);
-        var blob = new Blob([jsonData], { type: 'application/json' });
-
-        // Create and show download link
-        var url = URL.createObjectURL(blob);
-        var downloadLink = document.getElementById('download-link');
+        let jsonData = JSON.stringify(data);
+        let blob = new Blob([jsonData], { type: 'application/json' });
+        let url = URL.createObjectURL(blob);
+        let downloadLink = document.getElementById('download-link');
         downloadLink.href = url;
 
         document.getElementById('download-link-container').style.display = 'block';
