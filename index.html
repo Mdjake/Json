@@ -3,207 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reminder Setup | By Developer Saif</title>
+    <title>Akhri Alvida 💔</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        /* Body Background */
         body {
-            font-family: 'Arial', sans-serif;
-            background: #f0f4f8;
+            background: url('https://source.unsplash.com/1600x900/?rain,sad') no-repeat center center/cover;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            color: #333;
-        }
-        .container {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            width: 400px;
             text-align: center;
-            transition: all 0.3s ease;
+            color: white;
+            font-family: 'Georgia', serif;
+            backdrop-filter: blur(5px);
+            overflow: hidden;
         }
-        .container:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+
+        /* Letter Box */
+        .container {
+            max-width: 80%;
+            padding: 30px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 3s ease-in-out, zoomIn 10s ease-in-out forwards, heartbeat 2s infinite alternate;
         }
-        h2 {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4CAF50;
-            margin-bottom: 20px;
+
+        /* Floating Effect */
+        .letter {
+            font-size: 1.8em;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeInText 4s ease-in-out forwards, glow 3s infinite alternate, float 5s ease-in-out infinite;
         }
-        .time-select {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-        select {
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #fafafa;
-            width: 30%;
-            margin: 0 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+
+        @keyframes fadeInText {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
-        select:hover {
-            border-color: #4CAF50;
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.9); }
+            100% { transform: scale(1); }
         }
-        .input-field {
+
+        @keyframes glow {
+            0% { text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4); }
+            100% { text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.9); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.02); }
+        }
+
+        /* Lightning Flash */
+        @keyframes flash {
+            0% { background: rgba(255, 255, 255, 0.2); }
+            100% { background: rgba(0, 0, 0, 0); }
+        }
+
+        /* Rain Effect */
+        .rain {
+            position: absolute;
             width: 100%;
-            margin-bottom: 20px;
+            height: 100%;
+            pointer-events: none;
+            background: url('https://i.gifer.com/7U5l.gif') repeat;
+            opacity: 0.3;
         }
-        textarea {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #fafafa;
-            height: 100px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-        textarea:hover {
-            border-color: #4CAF50;
-        }
-        button {
-            background-color: #4CAF50;
-            color: #ffffff;
-            padding: 12px;
-            width: 100%;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .download-link {
-            margin-top: 20px;
-            display: none;
-        }
-        .footer {
-            font-size: 14px;
-            color: #888;
-            margin-top: 20px;
-        }
-        .footer a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-        .footer a:hover {
-            text-decoration: underline;
+
+        /* Fade Out (Last Goodbye) */
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(30px); }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Set Your Reminder</h2>
-    <form id="reminder-form">
-        <div class="input-field">
-            <label>Select Time</label>
-            <div class="time-select">
-                <select id="hours"></select>
-                <select id="minutes"></select>
-                <select id="ampm">
-                    <option value="AM">AM</option>
-                    <option value="PM">PM</option>
-                </select>
-            </div>
+    <div class="rain"></div> <!-- Rain Animation -->
+    
+    <div class="container">
+        <div class="letter">
+            "Aaj dil bhari hai, aakhon me nami hai... 💔  
+            <br>Kya ye akhri mulaqat hai? Ya sirf ek naya mod?  
+            <br>Yaadon ki kahani likh di hai waqt ne,  
+            <br>magar dil ke panne kabhi purane nahi hote...  
+            <br>Agar kabhi hawa me ek aah mehsoos ho,  
+            <br>samajh lena kahin koi tumhe yaad kar raha hai...  
+            <br>Alvida mat kehna, bas kehna...  
+            <br>'Alvida hee kehlena woh to bas dialogue tha' 💫"
+            <br> Byeee kafiya 💖
+            <br> Ek request bhi thi ho sake toh chats delete krke unfollow krdena. Block krdi toh or acha rehga. or ha ye bilkul nhi samajhna ki tunse gussa hoker kar rahe hai ye.....
         </div>
-        <div class="input-field">
-            <label for="message">Message</label>
-            <textarea id="message" placeholder="Enter your message" required></textarea>
-        </div>
-        <button type="submit">Generate Reminder</button>
-    </form>
-
-    <div class="download-link" id="download-link-container">
-        <a id="download-link" href="" download="data.json">
-            <button>Download data.json</button>
-        </a>
     </div>
-
-    <div class="footer">
-        <p>Created with ❤️ by <a href="https://github.com/mdjake" target="_blank">Developer Saif</a></p>
-    </div>
-</div>
-
-<script>
-    function getCurrentTime() {
-        let now = new Date();
-        let hours = now.getHours() % 12 || 12; // Convert 24-hour to 12-hour format
-        let minutes = now.getMinutes();
-        let ampm = now.getHours() >= 12 ? "PM" : "AM";
-
-        return { hours, minutes, ampm };
-    }
-
-    function populateTimeDropdowns() {
-        let hoursSelect = document.getElementById("hours");
-        let minutesSelect = document.getElementById("minutes");
-        let ampmSelect = document.getElementById("ampm");
-
-        let currentTime = getCurrentTime();
-
-        // Populate hours (1-12)
-        for (let h = 1; h <= 12; h++) {
-            let option = new Option(h, h);
-            if (h === currentTime.hours) option.selected = true;
-            hoursSelect.appendChild(option);
-        }
-
-        // Populate minutes (0-59)
-        for (let m = 0; m < 60; m++) {
-            let formattedMinute = String(m).padStart(2, '0');
-            let option = new Option(formattedMinute, formattedMinute);
-            if (m === currentTime.minutes) option.selected = true;
-            minutesSelect.appendChild(option);
-        }
-
-        // Set default AM/PM
-        ampmSelect.value = currentTime.ampm;
-    }
-
-    document.addEventListener("DOMContentLoaded", populateTimeDropdowns);
-
-    document.getElementById('reminder-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        let hours = document.getElementById('hours').value;
-        let minutes = document.getElementById('minutes').value;
-        let ampm = document.getElementById('ampm').value;
-        let message = document.getElementById('message').value;
-
-        let time = `${hours}:${minutes} ${ampm}`;
-
-        let data = {
-            "time": time,
-            "message": message
-        };
-
-        let jsonData = JSON.stringify(data);
-        let blob = new Blob([jsonData], { type: 'application/json' });
-        let url = URL.createObjectURL(blob);
-        let downloadLink = document.getElementById('download-link');
-        downloadLink.href = url;
-
-        document.getElementById('download-link-container').style.display = 'block';
-    });
-</script>
 
 </body>
 </html>
